@@ -8,16 +8,15 @@ open Ganss.IO
 let enumerateFiles path =
     Glob.Expand path
 
-let writeFileName (fInfo : System.IO.Abstractions.IFileSystemInfo) =
-    printfn "%s" fInfo.FullName
-
-let reportErrors (fileInfos : Async<seq<System.IO.Abstractions.IFileSystemInfo>>) =
-    printfn "The following files failed:" 
+let reportErrors (fileInfos : Async<seq<string>>) =
     async{
         let! awaitedFinfos = fileInfos
         return 
             match awaitedFinfos with
-            | sequence when Seq.isEmpty sequence |> not -> sequence |> Seq.map writeFileName |> (fun _ -> -2)
+            | sequence when Seq.isEmpty sequence |> not -> 
+                printfn "%sThe following files failed:" System.Environment.NewLine
+                for item in sequence do printfn "%s" item
+                -2
             | _ -> 0
     }
 

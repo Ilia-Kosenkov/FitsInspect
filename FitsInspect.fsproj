@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <LangVersion>4.7</LangVersion>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Version>0.1.0</Version>
     <Authors>Ilia Kosenkov</Authors>
     <Description>Inspects FITS headers of given files</Description>
+    <AssemblyName>fitsinspect</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +19,7 @@
   <ItemGroup>
     <PackageReference Include="CommandLineParser.FSharp" Version="2.7.82" />
     <PackageReference Include="FitsCs" Version="0.1.1" />
+    <PackageReference Include="FSharp.Control.AsyncSeq" Version="2.0.22" />
     <PackageReference Include="Glob.cs" Version="4.0.166" />
   </ItemGroup>
 
