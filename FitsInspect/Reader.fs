@@ -4,11 +4,11 @@ open FSharp.Control
 
 let parseFile (fInfo : System.IO.Abstractions.IFileSystemInfo) =
     async {
-        use fileStream = new FileStream(fInfo.FullName, FileMode.Open, FileAccess.Read)
-        use fitsReader = new FitsCs.FitsReader(fileStream)
-
-        let enumer = fitsReader.EnumerateBlocksAsync().GetAsyncEnumerator()
         try
+            use fileStream = new FileStream(fInfo.FullName, FileMode.Open, FileAccess.Read)
+            use fitsReader = new FitsCs.FitsReader(fileStream)
+
+            let enumer = fitsReader.EnumerateBlocksAsync().GetAsyncEnumerator()
             let! outerFlag = enumer.MoveNextAsync().AsTask() |> Async.AwaitTask
             let mutable condition = outerFlag
             let mutable counter = 1
@@ -28,6 +28,7 @@ let readFiles fileInfos =
     async {
         let! results = 
             fileInfos 
+            |> Seq.distinctBy (fun (y : System.IO.Abstractions.IFileSystemInfo) -> y.FullName)
             |> AsyncSeq.ofSeq
             |> AsyncSeq.mapAsync parseFile
             |> AsyncSeq.toListAsync
