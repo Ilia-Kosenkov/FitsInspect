@@ -3,8 +3,8 @@
 let parseFile file =
     ()
 
-let enumerateFiles files =
+let readFiles files =
     files 
-        |> List.map parseFile
+        |> Seq.map parseFile
         |> ignore
     0

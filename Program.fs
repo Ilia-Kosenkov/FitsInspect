@@ -1,16 +1,19 @@
-﻿// Learn more about F# at http://fsharp.org
-
-open System
+﻿
 open CommandLine
 open Options
+open Reader
+open Ganss.IO
+
 
 let enumerateFiles path =
-    Seq.empty
+    Glob.Expand path
 
-let process (opts : ParserResult<CmdOptions>) =
+let procssPaths (opts : ParserResult<CmdOptions>) =
     match opts with
-    | :? Parsed<CmdOptions> as parsedOpts -> seq {for path in parsedOpts.Value.Files do yield! enumerateFiles path}
-    | _ -> Seq.empty
+    | :? Parsed<CmdOptions> as parsedOpts -> 
+        seq {for path in parsedOpts.Value.Files do yield! enumerateFiles path} |>
+            readFiles
+    | _ -> -1
 
 
 
@@ -18,6 +21,6 @@ let process (opts : ParserResult<CmdOptions>) =
 let main argv =
     argv 
         |> Parser.Default.ParseArguments<CmdOptions>
-        |> process
+        |> procssPaths
         |> ignore
     0
