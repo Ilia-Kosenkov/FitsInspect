@@ -3,15 +3,21 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Version>0.1.0</Version>
+    <Authors>Ilia Kosenkov</Authors>
+    <Description>Inspects FITS headers of given files</Description>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Reader.fs" />
+    <Compile Include="Options.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser.FSharp" Version="2.7.82" />
     <PackageReference Include="FitsCs" Version="0.1.1" />
+    <PackageReference Include="Glob.cs" Version="4.0.166" />
   </ItemGroup>
 
 </Project>
