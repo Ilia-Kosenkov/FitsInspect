@@ -15,7 +15,7 @@ let parseFile (fInfo : System.IO.Abstractions.IFileSystemInfo) =
             if condition then printfn "%sInspecting file %s%s" System.Environment.NewLine fInfo.Name System.Environment.NewLine
             while condition do 
                 printfn "---------%sBlock #%i:%s---------"  System.Environment.NewLine counter System.Environment.NewLine
-                for key in enumer.Current.Keys do printfn "%s" (key.ToString(true))
+                enumer.Current.Keys |> Seq.iteri (fun ind k -> printfn "%04i > %s" (ind + 1) (k.ToString(true)))
                 let! flag = enumer.MoveNextAsync().AsTask() |> Async.AwaitTask
                 condition <- flag
                 counter <- counter + 1
