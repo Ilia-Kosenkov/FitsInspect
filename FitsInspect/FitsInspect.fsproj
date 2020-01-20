@@ -4,7 +4,7 @@
     <LangVersion>4.7</LangVersion>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>0.1.4</Version>
+    <Version>0.1.5</Version>
     <Authors>Ilia Kosenkov</Authors>
     <Description>Inspects FITS headers of given files</Description>
     <AssemblyName>fitsinspect</AssemblyName>
