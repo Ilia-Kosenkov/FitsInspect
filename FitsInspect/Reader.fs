@@ -3,28 +3,6 @@ open System.IO
 open FSharp.Control
 open System.Linq
 
-let parseFile (fInfo : System.IO.Abstractions.IFileSystemInfo) =
-    async {
-        try
-            use fileStream = new FileStream(fInfo.FullName, FileMode.Open, FileAccess.Read)
-            use fitsReader = new FitsCs.FitsReader(fileStream)
-
-            let enumer = fitsReader.EnumerateBlocksAsync().GetAsyncEnumerator()
-            let! outerFlag = enumer.MoveNextAsync().AsTask() |> Async.AwaitTask
-            let mutable condition = outerFlag
-            let mutable counter = 1
-            if condition then printfn "%sInspecting file %s%s" System.Environment.NewLine fInfo.Name System.Environment.NewLine
-            while condition do 
-                printfn "---------%sBlock #%i:%s---------"  System.Environment.NewLine counter System.Environment.NewLine
-                enumer.Current.Keys |> Seq.iteri (fun ind k -> printfn "%04i > %s" (ind + 1) (k.ToString(true)))
-                let! flag = enumer.MoveNextAsync().AsTask() |> Async.AwaitTask
-                condition <- flag
-                counter <- counter + 1
-            return Ok ()
-        with 
-            | _ -> return Error fInfo.FullName
-    }
-
 let buildKeySequence (i : int) (keys : System.Collections.Immutable.ImmutableList<FitsCs.IFitsValue>) =
     let init = [sprintf "---------%sBlock #%i:%s---------"  System.Environment.NewLine (i + 1) System.Environment.NewLine]
     init @ 
