@@ -46,7 +46,7 @@ Block #1:
 ...                                                                            
 ```
 
-Each key's prefox contains `FITS` key type information. 
-First column `udf|fix|fre` stand for *undefined*, *fixed* and *free* `FITS` key formats.
-Second column represents the data type of the key, including special `spcl` (as in non-standard *special* keys) and `blank` (completely blank keys).
+Each key's prefix contains `FITS` key type information. 
+The first column `udf|fix|fre` labels stand for the *undefined*, *fixed* and *free* `FITS` key formats, respectively.
+The second column represents the data type of the key, including special `spcl` (as in non-standard *special* keys) and `blank` (completely blank keys).
 
